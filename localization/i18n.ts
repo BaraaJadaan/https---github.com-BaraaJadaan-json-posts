@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as Localization from 'expo-localization';
 
 const resources = {
   en: {
@@ -27,7 +26,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: Localization.locale.includes('ar') ? 'ar' : 'en',
+    lng: 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

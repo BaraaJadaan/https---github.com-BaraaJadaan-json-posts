@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
-import i18n from '@/localization/i18n';
+import useLanguageInit from '@/hooks/useLanguageInit'; 
+import '@/localization/i18n';
 import { getPosts } from '../services/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../redux/slices/languageSlice';
 import { Link } from 'expo-router';
+import { RootState } from '../redux/store';
 
 
 interface Post {
@@ -18,8 +19,9 @@ interface Post {
 const PostsList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const { t } = useTranslation();
-  const router = useRouter();
+  useLanguageInit();
   const dispatch = useDispatch();
+  const currentLanguage = useSelector((state: RootState) => state.language.language);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -30,9 +32,8 @@ const PostsList = () => {
   }, []);
 
   const handleLanguageToggle = () => {
-    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    const newLang = currentLanguage === 'en' ? 'ar' : 'en';
     dispatch(setLanguage(newLang));
-    i18n.changeLanguage(newLang);
   };
 
   return (

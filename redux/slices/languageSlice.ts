@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { I18nManager } from 'react-native';
 
 interface LanguageState {
   language: 'en' | 'ar';
@@ -15,7 +14,6 @@ export const languageSlice = createSlice({
   reducers: {
     setLanguage: (state, action) => {
       state.language = action.payload;
-      I18nManager.forceRTL(action.payload === 'ar');
     },
   },
 });
